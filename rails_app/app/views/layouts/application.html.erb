@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Turbolinks Native Nav Demo</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <% if not mobile_app_request? %>
+      <nav>
+        <h1>Here is a nav that only shows for non-mobile-app requests</h1>
+        <ul>
+          <% navigation_items.each do |nav_item| %>
+            <li><%= link_to nav_item[:title], nav_item[:path] %></li>
+          <% end %>
+        </ul>
+      </nav>
+    <% end %>
+
+    <%= yield %>
+  </body>
+
+<% if mobile_app_request? %>
+  <script>
+      navigation_json = '<%= navigation_items.to_json.html_safe %>';
+      window.webkit.messageHandlers.ApplicationController.postMessage(navigation_json);
+  </script>
+<% end %>
+
+</html>

@@ -1,0 +1,5 @@
+use_frameworks!
+target 'ios_app' do
+  pod 'Turbolinks', :git => 'https://github.com/turbolinks/turbolinks-ios.git'
+  pod 'SwiftyJSON'
+end
